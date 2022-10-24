@@ -8,9 +8,13 @@ public class DummyController : ControllerBase
 {
     public DummyController()
     {
-        
+
     }
 
+    /// <summary>
+    /// Gets random integer
+    /// </summary>
+    /// <returns>Random integer</returns>
     [HttpGet(Name = "GetRandomInt")]
     public int Get()
     {
