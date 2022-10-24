@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace baseledger_replicator.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
-public class DummyController : ControllerBase
+public class DummyController : BaseController
 {
     public DummyController()
     {
