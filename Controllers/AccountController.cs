@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using baseledger_replicator.BusinessLogic.Auth.Commands;
 using baseledger_replicator.DTOs.Auth;
 using baseledger_replicator.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace baseledger_replicator.Controllers;
 
@@ -30,6 +31,9 @@ public class AccountController : BaseController
     /// <response code="200">Successful registration</response>
     /// <response code="400">If an error occured during registration</response>
     [HttpPost("register")]
+    [Authorize]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(string[]))]
     public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserDto registerUserDto)
     {
         var newUser = new IdentityUser()
