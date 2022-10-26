@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using baseledger_replicator.Models;
@@ -11,9 +12,10 @@ using baseledger_replicator.Models;
 namespace baseledger_replicator.Migrations
 {
     [DbContext(typeof(BaseledgerReplicatorContext))]
-    partial class BaseledgerReplicatorContextModelSnapshot : ModelSnapshot
+    [Migration("20221026112501_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
