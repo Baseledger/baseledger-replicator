@@ -11,8 +11,8 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-string connectionString = builder.Configuration["ConnectionStrings:Default"];
-builder.Services.AddDbContextPool<BaseledgerReplicatorContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+string connectionString = builder.Configuration["ConnectionStrings:Postgres"];
+builder.Services.AddDbContextPool<BaseledgerReplicatorContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddEntityFrameworkStores<BaseledgerReplicatorContext>();
