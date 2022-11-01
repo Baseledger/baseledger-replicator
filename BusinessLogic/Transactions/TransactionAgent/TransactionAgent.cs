@@ -1,14 +1,12 @@
-using Microsoft.AspNetCore.WebUtilities;
-
 namespace baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
 
 public class TransactionAgent : ITransactionAgent
 {
-    private readonly string url = "http://0.0.0.0:1317/cosmos/tx/v1beta1/txs";
+    private readonly string url = "http://0.0.0.0:1317/cosmos/tx/v1beta1/txs/";
 
-    private readonly ILogger _logger;
+    private readonly ILogger<TransactionAgent> _logger;
 
-    public TransactionAgent(ILogger logger)
+    public TransactionAgent(ILogger<TransactionAgent> logger)
     {
         _logger = logger;
     }

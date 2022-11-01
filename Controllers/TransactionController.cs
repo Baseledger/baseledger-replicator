@@ -6,7 +6,7 @@ namespace baseledger_replicator.Controllers;
 
 [ApiController]
 [Authorize]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class TransactionController : BaseController
 {
     public TransactionController()
@@ -18,8 +18,8 @@ public class TransactionController : BaseController
     /// Retrieves transaction by txHash
     /// </summary>
     /// <param name="txHash">Transaction hash</param>
-    [HttpGet("transaction/{txhash}")]
-    public async Task<ActionResult<bool>> GetTxByHash([FromRoute] string txHash)
+    [HttpGet("transaction/{txHash}")]
+    public async Task<ActionResult> GetTxByHash([FromRoute] string txHash)
     {
         var result = await Mediator.Send(new GetTransactionByTxHashQuery { TxHash = txHash });
         return Ok(result);
