@@ -22,8 +22,8 @@ builder.Host.UseSerilog((ctx, lc) => lc
         .ReadFrom.Configuration(ctx.Configuration));
 
 // Add services to the container.
-string connectionString = builder.Configuration["ConnectionStrings:Default"];
-builder.Services.AddDbContextPool<BaseledgerReplicatorContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+string connectionString = builder.Configuration["ConnectionStrings:Postgres"];
+builder.Services.AddDbContextPool<BaseledgerReplicatorContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddEntityFrameworkStores<BaseledgerReplicatorContext>();
