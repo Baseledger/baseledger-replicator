@@ -7,8 +7,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((ctx, lc) => lc
+        .MinimumLevel.Debug()
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+        .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Information)
+        .Enrich.FromLogContext()
+        .WriteTo.File("Logs/baseledger-replicator.txt", rollingInterval: RollingInterval.Day)
+        .WriteTo.Console()
+        .ReadFrom.Configuration(ctx.Configuration));
 
 // Add services to the container.
 string connectionString = builder.Configuration["ConnectionStrings:Postgres"];
@@ -79,6 +90,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
