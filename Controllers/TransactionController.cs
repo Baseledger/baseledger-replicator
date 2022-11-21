@@ -18,7 +18,7 @@ public class TransactionController : BaseController
     /// Retrieves transaction by txHash
     /// </summary>
     /// <param name="txHash">Transaction hash</param>
-    [HttpGet("transaction/{txHash}")]
+    [HttpGet("{txHash}")]
     public async Task<ActionResult> GetTxByHash([FromRoute] string txHash)
     {
         var result = await Mediator.Send(new GetTransactionByTxHashQuery { TxHash = txHash });
