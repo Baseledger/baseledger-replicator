@@ -1,4 +1,5 @@
 using System.Reflection;
+using baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
 using baseledger_replicator.Models;
 using baseledger_replicator.Services;
 using MediatR;
@@ -33,6 +34,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Register interfaces
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<ITransactionAgent, TransactionAgent>();
 
 builder.Services.AddControllers();
 
