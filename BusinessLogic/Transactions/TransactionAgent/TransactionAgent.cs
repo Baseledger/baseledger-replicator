@@ -2,7 +2,7 @@ namespace baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
 
 public class TransactionAgent : ITransactionAgent
 {
-    private readonly string url = "http://0.0.0.0:1317/cosmos/tx/v1beta1/txs/";
+    private readonly string url = "http://127.0.0.1:1317/cosmos/tx/v1beta1/txs/";
 
     private readonly ILogger<TransactionAgent> _logger;
 

@@ -1,4 +1,12 @@
-docker run -d --name replicator testtest
+Build the image of the replicator:
+
+docker build -t testtest .
+
+Run the replicator container:
+
+docker run -d --name replicator -p 1317:1317 testtest
+
+Initialize node:
 
 docker exec replicator /root/.baseledger/cosmovisor/genesis/bin/baseledgerd init testreplicator --chain-id=baseledger
 
@@ -20,4 +28,15 @@ docker exec -ti replicator /root/.baseledger/cosmovisor/genesis/bin/baseledgerd 
 
 # docker exec c1 systemctl start cosmovisor
 
-docker exec -e DAEMON_HOME=/root/.baseledger -e DAEMON_NAME=baseledgerd -e KEYRING_PASSWORD=<provide your pass> -e KEYRING_DIR=/root/.baseledger replicator /root/go/bin/cosmovisor --p2p.persistent_peers 9078b8ba5a8cb2d2bdd750f7e0bffede94408f0f@178.62.214.133:26656 --p2p.laddr tcp://127.0.0.1:26656 start &> ./repllogs &
+Run the node:
+
+docker exec -e DAEMON_HOME=/root/.baseledger -e DAEMON_NAME=baseledgerd -e KEYRING_PASSWORD=qwerty123 -e KEYRING_DIR=/root/.baseledger replicator /root/go/bin/cosmovisor --p2p.persistent_peers 9078b8ba5a8cb2d2bdd750f7e0bffede94408f0f@178.62.214.133:26656 --p2p.laddr tcp://127.0.0.1:26656 start &> ./repllogs &
+
+Run a postgres DB instance:
+
+docker run --name replicator-db -e POSTGRES_PASSWORD=qwerty123db -p 5432:5432 -d postgres
+
+Run the app:
+
+dotnet-ef database update
+dotnet run
