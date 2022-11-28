@@ -1,4 +1,4 @@
-Build the image of the replicator:
+Run replicator api and join the baseledger mainnet
 
 docker build -t testtest .
 
