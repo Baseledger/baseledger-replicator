@@ -41,7 +41,10 @@ public class TransactionController : BaseController
             Payload = body.Payload
         });
 
-        // TODO: How and in what detail do we want to process errors and return them to the API caller?
+        // return Ok txhash
+        // custom exception handler
+        // not found
+        // bad request
         return txHash != null ? Ok(txHash) : Ok("Error when creating transaction in replicator node.");
     }
 }
