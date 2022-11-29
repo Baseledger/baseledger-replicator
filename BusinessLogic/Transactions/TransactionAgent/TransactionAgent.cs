@@ -1,3 +1,4 @@
+using baseledger_replicator.DTOs.Transactions;
 using Newtonsoft.Json;
 
 namespace baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
@@ -13,27 +14,38 @@ public class TransactionAgent : ITransactionAgent
         _logger = logger;
     }
 
-    public async Task<bool> QueryTxByHash(string txHash)
+    public async Task<TransactionResponseDto> QueryTxByHash(string txHash)
     {
         var httpClient = new HttpClient();
-
         var uri = new Uri(this.baseUrl + "cosmos/tx/v1beta1/txs/" + txHash);
 
-        var response = await httpClient.GetAsync(uri);
+        HttpResponseMessage response;
 
         try
         {
+            response = await httpClient.GetAsync(uri);
             response.EnsureSuccessStatusCode();
-            var responseString = response.Content.ReadAsStringAsync().Result;
-            // TODO: add response body deserialization
-            // string something = JsonConvert.DeserializeObject<dynamic>(responseString).property;
         }
-        catch (Exception ex)
+        catch (HttpRequestException ex)
         {
-            _logger.LogError($"Error while retrieving transaction: {ex.Message} for txHash: {txHash}");
+            _logger.LogError($"Error while retrieving transaction: {ex.Message} for txHash: {txHash} \nInner exception: {ex.InnerException?.Message}");
+            // TODO: throw custom exception
+            return null;
         }
 
-        return true;
+        try
+        {
+            var responseString = response.Content.ReadAsStringAsync().Result;
+            TransactionResponseDto txResponse = JsonConvert.DeserializeObject<TransactionFullResponseDto>(responseString).TransactionResponseDto;
+
+            return txResponse;
+        }
+        catch (JsonSerializationException ex)
+        {
+            _logger.LogError($"Error trying to deserialize response when querying transaction by hash {txHash}: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
+            // TODO: throw custom exception
+            return null;
+        }
     }
 
     public async Task<string> CreateTransaction(Guid transactionId, string payload)

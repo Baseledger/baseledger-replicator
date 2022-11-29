@@ -21,7 +21,8 @@ public class TransactionController : BaseController
     /// </summary>
     /// <param name="txHash">Transaction hash</param>
     [HttpGet("{txHash}")]
-    public async Task<ActionResult> GetTxByHash([FromRoute] string txHash)
+    [Produces("application/json")]
+    public async Task<IActionResult> GetTxByHash([FromRoute] string txHash)
     {
         var result = await Mediator.Send(new GetTransactionByTxHashQuery { TxHash = txHash });
         return Ok(result);
@@ -33,7 +34,7 @@ public class TransactionController : BaseController
     /// <param name="body">CreateTransactionDto containing transaction ID and payload</param>
     [HttpPost]
     [Route("create")]
-    public async Task<ActionResult> CreateTransactionInReplicatorNode([FromBody] CreateTransactionDto body)
+    public async Task<IActionResult> CreateTransactionInReplicatorNode([FromBody] CreateTransactionDto body)
     {
         var txHash = await Mediator.Send(new CreateTransactionInReplicatorNodeCommand
         {
