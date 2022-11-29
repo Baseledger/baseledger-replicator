@@ -4,8 +4,7 @@ namespace baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
 
 public class TransactionAgent : ITransactionAgent
 {
-    // base: http://0.0.0.0:1317
-    private readonly string url = "http://0.0.0.0:1317/cosmos/tx/v1beta1/txs/";
+    private readonly string baseUrl = "http://127.0.0.1:1317/";
 
     private readonly ILogger<TransactionAgent> _logger;
 
@@ -18,7 +17,7 @@ public class TransactionAgent : ITransactionAgent
     {
         var httpClient = new HttpClient();
 
-        var uri = new Uri(this.url + txHash);
+        var uri = new Uri(this.baseUrl + "cosmos/tx/v1beta1/txs/" + txHash);
 
         var response = await httpClient.GetAsync(uri);
 
@@ -41,7 +40,7 @@ public class TransactionAgent : ITransactionAgent
     {
         var httpClient = new HttpClient();
         // ovo ide na base
-        var uri = new Uri(this.url + "signAndBroadcast");
+        var uri = new Uri(this.baseUrl + "signAndBroadcast");
         var body = new
         {
             transaction_id = transactionId,
