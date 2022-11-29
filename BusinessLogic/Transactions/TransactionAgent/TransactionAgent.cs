@@ -26,7 +26,7 @@ public class TransactionAgent : ITransactionAgent
             response.EnsureSuccessStatusCode();
             var responseString = response.Content.ReadAsStringAsync().Result;
             // TODO: add response body deserialization
-            // string something = JsonConvert.DeserializeObject<dynamic>(responseStr).property;
+            // string something = JsonConvert.DeserializeObject<dynamic>(responseString).property;
         }
         catch (Exception ex)
         {
@@ -39,7 +39,6 @@ public class TransactionAgent : ITransactionAgent
     public async Task<string> CreateTransaction(Guid transactionId, string payload)
     {
         var httpClient = new HttpClient();
-        // ovo ide na base
         var uri = new Uri(this.baseUrl + "signAndBroadcast");
         var body = new
         {
