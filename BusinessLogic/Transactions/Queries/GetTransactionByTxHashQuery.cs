@@ -1,14 +1,15 @@
 using baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
+using baseledger_replicator.DTOs.Transactions;
 using MediatR;
 
 namespace baseledger_replicator.BusinessLogic.Transactions.Queries;
 
-public class GetTransactionByTxHashQuery : IRequest<bool>
+public class GetTransactionByTxHashQuery : IRequest<TransactionResponseDto>
 {
     public string TxHash { get; set; }
 }
 
-public class GetTransactionByTxHashQueryHandler : IRequestHandler<GetTransactionByTxHashQuery, bool>
+public class GetTransactionByTxHashQueryHandler : IRequestHandler<GetTransactionByTxHashQuery, TransactionResponseDto>
 {
     private readonly ITransactionAgent _transactionAgent;
 
@@ -17,10 +18,8 @@ public class GetTransactionByTxHashQueryHandler : IRequestHandler<GetTransaction
         _transactionAgent = transactionAgent;
     }
 
-    public async Task<bool> Handle(GetTransactionByTxHashQuery request, CancellationToken cancellationToken)
+    public async Task<TransactionResponseDto> Handle(GetTransactionByTxHashQuery request, CancellationToken cancellationToken)
     {
-        var result = await _transactionAgent.QueryTxByHash(request.TxHash);
-
-        return result;
+        return await _transactionAgent.QueryTxByHash(request.TxHash);
     }
 }
