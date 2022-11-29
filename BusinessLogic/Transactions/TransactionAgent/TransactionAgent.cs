@@ -4,8 +4,7 @@ namespace baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
 
 public class TransactionAgent : ITransactionAgent
 {
-    // TODO: Should we be thinking about extracting urls and accessing them via options or something like that?
-    // Should we be introducing replicatorService for direct communication with replicator node or it's fine to invoke from the agent?
+    // base: http://0.0.0.0:1317
     private readonly string url = "http://0.0.0.0:1317/cosmos/tx/v1beta1/txs/";
 
     private readonly ILogger<TransactionAgent> _logger;
@@ -41,6 +40,7 @@ public class TransactionAgent : ITransactionAgent
     public async Task<string> CreateTransaction(Guid transactionId, string payload)
     {
         var httpClient = new HttpClient();
+        // ovo ide na base
         var uri = new Uri(this.url + "signAndBroadcast");
         var body = new
         {
@@ -57,8 +57,8 @@ public class TransactionAgent : ITransactionAgent
         }
         catch (HttpRequestException ex)
         {
-            _logger.LogError($"Error in creating transaction: {ex.Message} for transactionId: {transactionId}");
-            // TODO: How do we want to process errors and return them to the API caller?
+            _logger.LogError($"Error in creating transaction for transactionId: {transactionId} with message: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
+            // TODO: throw custom exception
             return null;
         }
 
