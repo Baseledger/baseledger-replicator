@@ -36,6 +36,8 @@ docker exec -ti replicator /root/.baseledger/cosmovisor/genesis/bin/baseledgerd 
 
 Run the node:
 
+make sure to enable api = true in app.toml
+
 docker exec -e DAEMON_HOME=/root/.baseledger -e DAEMON_NAME=baseledgerd -e KEYRING_PASSWORD=qwerty123 -e KEYRING_DIR=/root/.baseledger replicator /root/go/bin/cosmovisor --p2p.persistent_peers 9078b8ba5a8cb2d2bdd750f7e0bffede94408f0f@178.62.214.133:26656 --p2p.laddr tcp://127.0.0.1:26656 start &> ./repllogs &
 
 Run a postgres DB instance:
