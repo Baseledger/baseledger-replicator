@@ -5,7 +5,7 @@ namespace baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
 
 public class TransactionAgent : ITransactionAgent
 {
-    private readonly string baseUrl = "http://127.0.0.1:1317/";
+    private readonly string baseUrl = "http://replicator:1317/";
 
     private readonly ILogger<TransactionAgent> _logger;
 
