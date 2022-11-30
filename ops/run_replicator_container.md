@@ -2,9 +2,15 @@ Run replicator api and join the baseledger mainnet
 
 docker build -t testtest .
 
+On Mac with Apple silicon (M1, M2) run instead:
+docker build -t testtest --platform=linux/amd64 .
+
 Run the replicator container:
 
 docker run -d --name replicator -p 1317:1317 testtest
+
+On Mac with Apple silicon (M1, M2) run instead:
+docker run -d --name replicator --platform=linux/amd64 -p 1317:1317 testtest
 
 Initialize node:
 
