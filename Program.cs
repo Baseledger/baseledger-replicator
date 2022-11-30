@@ -1,5 +1,6 @@
 using System.Reflection;
 using baseledger_replicator.BusinessLogic.Transactions.TransactionAgent;
+using baseledger_replicator.Common.ExceptionHandling;
 using baseledger_replicator.Models;
 using baseledger_replicator.Services;
 using MediatR;
@@ -93,7 +94,10 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+var traceIdentifierService = app.Services.GetRequiredService<ITraceIdentifierService>();
+
 app.UseSerilogRequestLogging();
+app.UseCustomExceptionHandler(traceIdentifierService);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
