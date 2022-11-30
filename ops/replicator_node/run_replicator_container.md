@@ -1,16 +1,4 @@
-Run replicator api and join the baseledger mainnet
-
-docker build -t testtest .
-
-On Mac with Apple silicon (M1, M2) run instead:
-docker build -t testtest --platform=linux/amd64 .
-
-Run the replicator container:
-
-docker run -d --name replicator -p 1317:1317 testtest
-
-On Mac with Apple silicon (M1, M2) run instead:
-docker run -d --name replicator --platform=linux/amd64 -p 1317:1317 testtest
+Configure the node to join the baseledger mainnet as a replicator
 
 Initialize node:
 
@@ -22,29 +10,8 @@ docker exec replicator cp /root/mainnet/v1.0.0/genesis.json /root/.baseledger/co
 
 docker exec -ti replicator /root/.baseledger/cosmovisor/genesis/bin/baseledgerd keys add --keyring-backend file testreplicatorkey
 
-# docker exec c1 sed -i 's/<list_of_persistent_peers>/9078b8ba5a8cb2d2bdd750f7e0bffede94408f0f@178.62.214.133:26656/g' /baseledger-plateau/mainnet/v1.0.0/baseledger/cosmovisor.service
-
-# docker exec c1 sed -i 's/<your_static_ip>/127.0.0.1/g' /baseledger-plateau/mainnet/v1.0.0/baseledger/cosmovisor.service
-
-# docker exec c1 sed -i 's/<your_keyring_password>/<provide your pass>/g' /baseledger-plateau/mainnet/v1.0.0/baseledger/cosmovisor.service
-
-# docker exec c1 cp /baseledger-plateau/mainnet/v1.0.0/baseledger/cosmovisor.service /etc/systemd/system
-
-# docker exec c1 systemctl daemon-reload
-
-# docker exec c1 systemctl start cosmovisor
-
 Run the node:
 
-make sure to enable api = true in app.toml
+TODO: make sure to enable api = true in app.toml
 
 docker exec -e DAEMON_HOME=/root/.baseledger -e DAEMON_NAME=baseledgerd -e KEYRING_PASSWORD=qwerty123 -e KEYRING_DIR=/root/.baseledger replicator /root/go/bin/cosmovisor --p2p.persistent_peers 9078b8ba5a8cb2d2bdd750f7e0bffede94408f0f@178.62.214.133:26656 --p2p.laddr tcp://127.0.0.1:26656 start &> ./repllogs &
-
-Run a postgres DB instance:
-
-docker run --name replicator-db -e POSTGRES_PASSWORD=qwerty123db -p 5432:5432 -d postgres
-
-Run the app:
-
-dotnet-ef database update
-dotnet run
