@@ -4,7 +4,11 @@ echo "Make sure latest replicator node image built from /ops/replicator_node/bui
 
 # TODO: Make sure only api port exposed
 docker network create baseledgernet
+
 docker run -d --name replicator --net baseledgernet -p 1317:1317 baseledger_replicator
+# On Mac with Apple silicon (M1, M2) run instead:
+#docker run -d --name replicator --platform=linux/amd64 -p 1317:1317 baseledger_replicator
+
 docker run --name replicator-db --net baseledgernet -e POSTGRES_PASSWORD=<pass> -p 5432:5432 -d postgres
 docker run --name replicator-api --net baseledgernet -p 5000:80 -d replicator_api
 
