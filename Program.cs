@@ -94,10 +94,8 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-var traceIdentifierService = app.Services.GetRequiredService<ITraceIdentifierService>();
-
 app.UseSerilogRequestLogging();
-app.UseCustomExceptionHandler(traceIdentifierService);
+app.UseCustomExceptionHandler();
 
 using (var scope = app.Services.CreateScope())
 {

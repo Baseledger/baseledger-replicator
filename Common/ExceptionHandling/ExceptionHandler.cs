@@ -13,10 +13,9 @@ public static class ExceptionHandler
     /// 
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="traceIdentifierService"></param>
 
     // TODO: Do we also need UnhandledExceptionBehaviour?
-    public static void UseCustomExceptionHandler(this IApplicationBuilder app, ITraceIdentifierService traceIdentifierService)
+    public static void UseCustomExceptionHandler(this IApplicationBuilder app)
     {
         app.UseExceptionHandler(eApp =>
         {
@@ -30,7 +29,6 @@ public static class ExceptionHandler
                 {
                     var ex = errorCtx.Error;
                     var message = "Unspecified error ocurred.";
-                    var traceId = traceIdentifierService.TraceId;
                     var errors = new Dictionary<string, List<string>>();
 
                     switch (ex)
@@ -39,7 +37,7 @@ public static class ExceptionHandler
                             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                             message = ex.Message;
                             break;
-                        case ReplicatorProcessValidationException:
+                        case ReplicatorValidationException:
                             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                             message = ex.Message;
                             errors = (ex as dynamic).Errors;
@@ -58,7 +56,6 @@ public static class ExceptionHandler
                     serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     var jsonResponse = JsonConvert.SerializeObject(new ErrorResponse
                     {
-                        TraceId = traceId,
                         Message = message,
                         Errors = errors
                     }, serializerSettings);
