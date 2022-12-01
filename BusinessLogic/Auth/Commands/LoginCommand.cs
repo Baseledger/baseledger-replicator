@@ -1,4 +1,5 @@
 using AutoMapper;
+using baseledger_replicator.Common.Exceptions;
 using baseledger_replicator.DTOs.Auth;
 using baseledger_replicator.Services;
 using MediatR;
@@ -35,7 +36,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoggedUserDto>
         if (existingUser == null || !existingUser.EmailConfirmed)
         {
             _logger.LogError($"User with email: {request.Email} not found!");
-            throw new Exception($"User with email: {request.Email} not found!");
+            throw new ReplicatorNotFoundException($"User with email: {request.Email} not found!");
         }
 
         var isPasswordCorrect = await _userManager.CheckPasswordAsync(existingUser, request.Password);
@@ -51,7 +52,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoggedUserDto>
         else
         {
             _logger.LogError($"Invalid password for user: {existingUser.Email}");
-            throw new Exception($"Invalid password for user: {existingUser.Email}");
+            throw new ReplicatorValidationException($"Invalid password for user: {existingUser.Email}");
         }
     }
 }
