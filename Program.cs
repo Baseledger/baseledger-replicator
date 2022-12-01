@@ -97,16 +97,22 @@ var app = builder.Build();
 app.UseSerilogRequestLogging();
 app.UseCustomExceptionHandler();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
+    var dataContext = scope.ServiceProvider.GetRequiredService<BaseledgerReplicatorContext>();
+    dataContext.Database.Migrate();
+}
+
+// // Configure the HTTP request pipeline.
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
         {
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "baseledger-replicator-api v1");
             c.RoutePrefix = string.Empty;
         });
-}
+// }
 
 app.UseHttpsRedirection();
 
