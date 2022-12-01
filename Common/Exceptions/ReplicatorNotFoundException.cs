@@ -2,10 +2,6 @@
 
 public class ReplicatorNotFoundException : Exception
 {
-    public ReplicatorNotFoundException(string name, object key) : base($"Entity \"{name}\" ({key}) was not found.")
-    {
-    }
-
     public ReplicatorNotFoundException(string message, Exception innerException) : base(message, innerException)
     {
     }

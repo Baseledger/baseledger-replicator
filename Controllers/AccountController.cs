@@ -5,6 +5,7 @@ using baseledger_replicator.BusinessLogic.Auth.Commands;
 using baseledger_replicator.DTOs.Auth;
 using baseledger_replicator.Models;
 using Microsoft.AspNetCore.Authorization;
+using baseledger_replicator.Common.Exceptions;
 
 namespace baseledger_replicator.Controllers;
 
@@ -35,6 +36,13 @@ public class AccountController : BaseController
     [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(string[]))]
     public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserDto registerUserDto)
     {
+        var existingUser = await _userManager.FindByEmailAsync(registerUserDto.Email);
+        if (existingUser != null)
+        {
+            _logger.LogError($"User {registerUserDto.Email} is already registered.");
+            throw new ReplicatorValidationException($"User {registerUserDto.Email} is already registered.");
+        }
+
         var newUser = new IdentityUser()
         {
             Email = registerUserDto.Email

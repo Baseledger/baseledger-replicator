@@ -1,3 +1,5 @@
+using System.Net;
+using baseledger_replicator.Common.Exceptions;
 using baseledger_replicator.DTOs.Transactions;
 using Newtonsoft.Json;
 
@@ -28,9 +30,14 @@ public class TransactionAgent : ITransactionAgent
         }
         catch (HttpRequestException ex)
         {
-            _logger.LogError($"Error while retrieving transaction: {ex.Message} for txHash: {txHash} \nInner exception: {ex.InnerException?.Message}");
-            // TODO: throw custom exception
-            return null;
+            _logger.LogError($"Transaction for txHash {txHash} not found. Error message: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
+
+            if (ex.StatusCode != null && ex.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new ReplicatorNotFoundException($"Transaction for txHash {txHash} not found. Error message: {ex.Message}");
+            }
+
+            throw ex;
         }
 
         try
@@ -43,8 +50,7 @@ public class TransactionAgent : ITransactionAgent
         catch (JsonSerializationException ex)
         {
             _logger.LogError($"Error trying to deserialize response when querying transaction by hash {txHash}: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
-            // TODO: throw custom exception
-            return null;
+            throw ex;
         }
     }
 
@@ -67,9 +73,8 @@ public class TransactionAgent : ITransactionAgent
         }
         catch (HttpRequestException ex)
         {
-            _logger.LogError($"Error in creating transaction for transactionId: {transactionId} with message: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
-            // TODO: throw custom exception
-            return null;
+            _logger.LogError($"Error in creating transaction for transactionId {transactionId} with message: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
+            throw ex;
         }
 
         return response.Content.ReadAsStringAsync().Result;
