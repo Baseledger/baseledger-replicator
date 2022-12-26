@@ -4,6 +4,6 @@ namespace baseledger_replicator.DTOs.Transactions;
 
 public class TransactionBodyDto
 {
-    [JsonProperty("body")]
-    public string Body { get; set; }
+    [JsonProperty("messages")]
+    public List<TransactionMessageDto> Messages { get; set; }
 }

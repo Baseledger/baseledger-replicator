@@ -14,5 +14,5 @@ public class TransactionResponseDto
     public string Data { get; set; }
 
     [JsonProperty("tx")]
-    public TransactionBodyDto Tx { get; set; }
+    public TransactionDto Tx { get; set; }
 }
