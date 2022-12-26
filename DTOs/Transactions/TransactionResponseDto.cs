@@ -11,5 +11,8 @@ public class TransactionResponseDto
     public string TxHash { get; set; }
 
     [JsonProperty("data")]
-    public string Payload { get; set; }
+    public string Data { get; set; }
+
+    [JsonProperty("tx")]
+    public TransactionBodyDto Tx { get; set; }
 }
