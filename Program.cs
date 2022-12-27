@@ -101,6 +101,21 @@ using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<BaseledgerReplicatorContext>();
     dataContext.Database.Migrate();
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+    var existingAdminUser = await userManager.FindByEmailAsync(builder.Configuration["AdminEmail"]);
+    if (existingAdminUser == null)
+    {
+        var newUser = new IdentityUser()
+        {
+            Email = builder.Configuration["AdminEmail"],
+            UserName = builder.Configuration["AdminEmail"],
+            EmailConfirmed = true
+        };
+    
+        await userManager.CreateAsync(newUser, builder.Configuration["AdminPassword"]);
+    }
 }
 
 // // Configure the HTTP request pipeline.
