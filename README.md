@@ -7,6 +7,10 @@ This repository consist of the source code of the replicator API in the root fol
 
 ## Running the replicator
 
+### Prereqs
+
+Make sure to have [Docker](https://www.docker.com/) installed.
+
 
 ### Build docker images
 
