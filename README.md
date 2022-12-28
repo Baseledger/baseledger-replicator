@@ -8,7 +8,7 @@ This repository consist of the source code of the replicator API in the root fol
 ## Running the replicator
 
 
-### Docker images
+### Build docker images
 
 Before running, make sure that the latest dockers images are built. Please note that, once tested, these images will be deployed in docker hub and these two steps will not be needed.
 
@@ -24,7 +24,7 @@ Before running, make sure that the latest dockers images are built. Please note 
     
        docker build -t baseledger_replicator .
 
-### Docker containers
+### Build docker containers
 
 Navigate to root/ops folder and run:
 
@@ -32,7 +32,7 @@ Navigate to root/ops folder and run:
 
 The script will ask you to provide a JWT secret in Base64 format (you can generate one [here](https://www.base64encode.org/) by providing a random set of 16 characters and clicking on encode), a Postgres admin password and a API admin password. Make sure to store both passwords safely.
 
-### Configuring the node
+### Configure the node
 
 Once the containers are running, you can proceed to configure the node.
 
@@ -40,7 +40,7 @@ For a test node running on a local chain, please follow the instructions outline
 
 For a mainnet node running on a baseledger mainnet chain, please follow the instructions outlined in *root/ops/run_mainnet_replicator.md*
 
-### Testing the API
+### Test the API
 
 Replicator API should be available at http://localhost:5000/ via swagger. You can login with:
 
