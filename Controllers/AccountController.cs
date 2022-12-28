@@ -56,6 +56,13 @@ public class AccountController : BaseController
         newUser.EmailConfirmed = true;
 
         var creationResult = await _userManager.CreateAsync(newUser, registerUserDto.Password);
+
+        if (!creationResult.Succeeded)
+        {
+            _logger.LogError($"Error ${creationResult.Errors.First().Description} creating user {registerUserDto.Email}.");
+            throw new ReplicatorValidationException($"Error ${creationResult.Errors.First().Description} creating user {registerUserDto.Email}.");
+        }
+
         return Ok();
     }
 
