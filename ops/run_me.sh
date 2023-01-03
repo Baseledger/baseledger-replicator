@@ -1,16 +1,20 @@
 echo "Make sure latest replicator api image built from /ops/replicator_api/build_script.md"
 echo "Make sure latest replicator node image built from /ops/replicator_node/build_script.md"
 
-
 echo "Enter JWT secret in Base64 for the server and hit enter"
 read JWT_SECRET
 
 echo "Enter DB PAss for postgres and hit enter"
 read DB_PASS
 
-echo "Enter replicator api admin (admin@replicator.node) password and hit enter"
+echo "Enter replicator api admin (admin@replicator.node) password and hit enter (min lenght 6, min one upper char, min one lower char, min one special char, min one number):"
 read API_ADMIN_PASS
 
+if [[ ${#API_ADMIN_PASS} -ge 6 && "$API_ADMIN_PASS" == *[A-Z]* && "$API_ADMIN_PASS" == *[a-z]* && "$API_ADMIN_PASS" == *[0-9]* && "$API_ADMIN_PASS" == *['!'@#\$%^\&*()_+]* ]];then
+    
+else
+    echo "Password does not fullfil the minimum requirements. Please rerun the script."
+fi
 
 docker network create baseledgernet
 
