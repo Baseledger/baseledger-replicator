@@ -11,9 +11,11 @@ echo "Enter replicator api admin (admin@replicator.node) password and hit enter 
 read API_ADMIN_PASS
 
 if [[ ${#API_ADMIN_PASS} -ge 6 && "$API_ADMIN_PASS" == *[A-Z]* && "$API_ADMIN_PASS" == *[a-z]* && "$API_ADMIN_PASS" == *[0-9]* && "$API_ADMIN_PASS" == *['!'@#\$%^\&*()_+]* ]];then
-    
+    # Password fulfills the minimum requirements
+    :
 else
     echo "Password does not fullfil the minimum requirements. Please rerun the script."
+    exit 1
 fi
 
 docker network create baseledgernet
