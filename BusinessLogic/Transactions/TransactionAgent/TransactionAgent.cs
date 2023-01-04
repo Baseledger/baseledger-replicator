@@ -26,31 +26,31 @@ public class TransactionAgent : ITransactionAgent
         try
         {
             response = await httpClient.GetAsync(uri);
-            response.EnsureSuccessStatusCode();
         }
         catch (HttpRequestException ex)
         {
-            _logger.LogError($"Transaction for txHash {txHash} not found. Error message: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
+            _logger.LogError($"Error getting response for txHash {txHash}. Error message: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
+            throw new ReplicatorNodeException($"Error getting response for txHash {txHash}. Error message: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
 
-            if (ex.StatusCode != null && ex.StatusCode == HttpStatusCode.NotFound)
-            {
-                throw new ReplicatorNotFoundException($"Transaction for txHash {txHash} not found. Error message: {ex.Message}");
-            }
+        }
 
-            throw ex;
+        var responseString = response.Content.ReadAsStringAsync().Result;
+
+        if (!response.IsSuccessStatusCode)
+        {
+            ErrorResponseDto errorResponse = JsonConvert.DeserializeObject<ErrorResponseDto>(responseString);
+            throw new ReplicatorNodeException($"Error while fetching transaction for txHash {txHash}. Error code: {errorResponse.Code} Error message: {errorResponse.Message}");
         }
 
         try
         {
-            var responseString = response.Content.ReadAsStringAsync().Result;
             TransactionResponseDto txResponse = JsonConvert.DeserializeObject<TransactionFullResponseDto>(responseString).TransactionResponseDto;
-
             return txResponse;
         }
         catch (JsonSerializationException ex)
         {
             _logger.LogError($"Error trying to deserialize response when querying transaction by hash {txHash}: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
-            throw ex;
+            throw new ReplicatorNodeException($"Error trying to deserialize response when querying transaction by hash {txHash}: {ex.Message} \nInner exception: {ex.InnerException?.Message}");
         }
     }
 

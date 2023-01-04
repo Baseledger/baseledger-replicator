@@ -46,6 +46,10 @@ public static class ExceptionHandler
                             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                             message = ex.Message;
                             break;
+                        case ReplicatorNodeException:
+                            context.Response.StatusCode = (int)HttpStatusCode.BadGateway;
+                            message = ex.Message;
+                            break;
                         default:
                             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                             message = ex.Message;

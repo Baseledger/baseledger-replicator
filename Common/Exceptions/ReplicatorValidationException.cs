@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace baseledger_replicator.Common.Exceptions;
+﻿namespace baseledger_replicator.Common.Exceptions;
 
 public class ReplicatorValidationException : Exception
 {
