@@ -9,8 +9,7 @@ This repository consist of the source code of the replicator API in the root fol
 
 ### Prereqs
 
-Make sure to have [Docker](https://www.docker.com/) installed.
-
+Currrently tested on Linux and MacOc. Windows support in the making. Make sure to have [Docker](https://www.docker.com/) installed.
 
 ### Build docker images
 
