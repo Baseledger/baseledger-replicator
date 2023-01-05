@@ -46,8 +46,17 @@ For a mainnet node running on a baseledger mainnet chain, please follow the inst
 
 ### Test the API
 
-Replicator API should be available at http://localhost:5000/ via swagger. You can login with:
+Replicator API should be available at http://localhost:5000/ via swagger. 
 
-    user: admin@replicator.node password: <api_admin_pass>
+You can login by following the procedure:
+
+* Click on the api/Account/login endpoint to expand it.
+* Click on the try it out button in the top right corner of the expanded endpoint.
+* Enter the admin credentials and click Execute
+
+    user: admin@replicator.node password: <api_admin_pass>.
+
+  [Login](/Assets/login.png?raw=true "Login endpoint")  
+* 
 
 and test the endpoints.
