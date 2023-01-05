@@ -42,10 +42,7 @@ public class TransactionController : BaseController
             Payload = body.Payload
         });
 
-        // return Ok txhash
-        // custom exception handler
-        // not found
-        // bad request
+
         return txHash != null ? Ok(txHash) : Ok("Error when creating transaction in replicator node.");
     }
 }

@@ -34,7 +34,7 @@ Navigate to root/ops folder and run:
 
     bash run_me.sh
 
-The script will ask you to provide a JWT secret in Base64 format (you can generate one [here](https://www.base64encode.org/) by providing a random set of 16 characters and clicking on encode), a Postgres admin password and a API admin password. Make sure to store both passwords safely.
+The script will ask you to provide a JWT secret in Base64 format (you can generate one [here](https://www.base64encode.org/) by providing a random set of 16 characters and clicking on encode), a Postgres admin password and a API admin password. Make sure to store both passwords safely. The API admin password must be at least 6 characters long, must contain minimun one upper, one lower, one numeric and one special character.
 
 ### Configure the node
 

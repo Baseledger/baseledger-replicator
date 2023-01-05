@@ -10,11 +10,9 @@ namespace baseledger_replicator.Common.ExceptionHandling;
 public static class ExceptionHandler
 {
     /// <summary>
-    /// 
+    /// Tracks custom exceptions that control the execution flow and formats the responses accordingly
     /// </summary>
     /// <param name="app"></param>
-
-    // TODO: Do we also need UnhandledExceptionBehaviour?
     public static void UseCustomExceptionHandler(this IApplicationBuilder app)
     {
         app.UseExceptionHandler(eApp =>
@@ -47,7 +45,7 @@ public static class ExceptionHandler
                             message = ex.Message;
                             break;
                         case ReplicatorNodeException:
-                            context.Response.StatusCode = (int)HttpStatusCode.BadGateway;
+                            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                             message = ex.Message;
                             break;
                         default:
