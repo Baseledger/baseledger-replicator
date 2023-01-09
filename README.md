@@ -43,7 +43,7 @@ For a test node running on a local chain, please follow the instructions outline
 
 For a mainnet node running on a baseledger mainnet chain, please follow the instructions outlined in *root/ops/run_mainnet_replicator.md*
 
-### Test the API
+### Work with the API
 
 Replicator API should be available at http://localhost:5000/ via swagger. 
 
@@ -74,5 +74,18 @@ You can login by following this procedure:
 
 
 You should see either 200 Ok as a response with transaction details or 400 Bad Request in case the tx cannot be found or other error occured. Please note that for mainnet replicator you need to wait until the node catches up with the height where your transaction is stored.
+
+### Issuing a new transacation
+
+* Make sure you have work tokens the address you generated during the setup phase of the node. This address was generated in step 4 of the *run_mainnet_replicator.md* Work tokens can be bought by <TODO>.
+
+
+* Login to the API as desribed above and expand api/Transaction​/create 
+
+* Input the transaction id (GUID) and your payload and click on Execute
+
+    ![Create Tx](/Assets/createTx.png?raw=true "Creating a new transaction")
+
+* If all ok, you will get a 200 Ok for a response with a transaction hash. Payload cost in work tokens can be found here <TODO>
 
 Happy replicating!
