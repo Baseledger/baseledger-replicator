@@ -77,15 +77,15 @@ You should see either 200 Ok as a response with transaction details or 400 Bad R
 
 ### Issuing a new transacation
 
-* Make sure you have work tokens the address you generated during the setup phase of the node. This address was generated in step 4 of the *run_mainnet_replicator.md* Work tokens can be bought by <TODO>.
+* Make sure you have work tokens on the address you generated during the setup phase of the node. This address was generated in step 4 of the *run_mainnet_replicator.md* Work tokens can be bought by <TODO>.
 
 
-* Login to the API as desribed above and expand api/Transaction​/create 
+* Login to the API as described above and expand api/Transaction​/create 
 
 * Input the transaction id (GUID) and your payload and click on Execute
 
     ![Create Tx](/Assets/createTx.png?raw=true "Creating a new transaction")
 
-* If all ok, you will get a 200 Ok for a response with a transaction hash. Payload cost in work tokens can be found here <TODO>
+* If all ok, you will get a 200 Ok for a response with a transaction hash. Payload cost in work tokens can be found here <TODO>.
 
 Happy replicating!
