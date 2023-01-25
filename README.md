@@ -13,7 +13,7 @@ Currrently tested on Linux and MacOc. Windows support in the making. Make sure t
 
 ### Build docker images
 
-Before running, make sure that the latest dockers images are built. Please note that, once tested, these images will be deployed in docker hub and these two steps will not be needed.
+This step is needed only if you want to build and compile from source code. Otherwise the scripts use docker hub Baseledger images.
 
 1. Build replicator api image
 
